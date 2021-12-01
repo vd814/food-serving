@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/mvc
+	http://www.springframework.org/schema/mvc/spring-mvc.xsd
+	http://www.springframework.org/schema/tx
+http://www.springframework.org/schema/tx/spring-tx.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+http://www.springframework.org/schema/task
+http://www.springframework.org/schema/task/spring-task-3.0.xsd">
+
+	<context:component-scan	base-package="com.swing.foodserving." />
+	<context:annotation-config />
+	
+	
+	<mvc:annotation-driven />
+		<!-- <mvc:interceptors>
+		<bean class="com.swing.prayas.handler.AfterLoginInterceptor" />
+		</mvc:interceptors> -->
+	<task:annotation-driven />
+	<!-- <context:component-scan base-package="com.swing.prayas" /> -->
+
+
+	<!-- localhost db -->
+<!-- 	 <bean id="dataSourcebean"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<property name="url"
+			value="jdbc:mysql://localhost:3306/food_serving" />
+		<property name="username" value="root" />
+		<property name="password" value="" />
+	</bean>  -->
+	
+		
+	<!-- http://139.59.56.202/ instances  prayas_corona server -->
+	<bean id="dataSourcebean" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName"
+			value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:8889/food_serving" />
+		<property name="username" value="java" />
+		<property name="password" value="123456" />
+	</bean>
+
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">  
+	  <property name="host" value="smtp.gmail.com" /> 
+	  <property name="port" value="465"></property> 
+	  <property name="username" value="mr.vd2000@gmail.com" />  
+	  <property name="password" value="Mr.VD@143@" />  
+	  <property name="javaMailProperties">  
+		  <props>  
+			  <prop key="mail.smtp.auth">true</prop>  
+		      <prop key="mail.smtp.socketFactory.port">465</prop>  
+			  <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>  
+			  <prop key="mail.smtp.starttls.enable">true</prop> 
+		  </props>  
+	  </property>  
+	</bean> 
+
+	<bean id="jdbcTemplate"
+		class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSourcebean" />
+	</bean>
+
+	<bean id="sessionfactorybean"
+		class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourcebean"></property>
+		<property name="configLocation"
+			value="classpath:hibernate.cfg.xml"></property>
+	</bean>
+	<!-- <bean id="prayasSesionFactory" class="com.swing.prayas.core.PrayasSessionFactory"> 
+		<constructor-arg ref="sessionfactorybean" /> </bean> -->
+	
+
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionfactorybean"></property>
+	</bean>
+	<tx:annotation-driven
+		transaction-manager="transactionManager" />
+</beans>

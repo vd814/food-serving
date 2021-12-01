@@ -1,0 +1,31 @@
+<?xml version='1.0' encoding='UTF-8'?>  
+<!DOCTYPE hibernate-configuration SYSTEM 
+    "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+		<property name="dataso"></property>
+		<property name="hbm2ddl.auto">update</property>
+		
+		<property name="hibernate.dialect" >com.swing.foodserving.handler.MysqlCustomDilect</property>
+		
+		<property name="packagesToScan">com.swing.foodserving.entity</property>
+		<property name="format_sql">false</property>
+		<property name="hibernate.cache.use_second_level_cache">true</property>
+		<property name="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</property>
+		
+		
+
+		<mapping class="com.swing.foodserving.entity.User" />
+		<mapping class="com.swing.foodserving.entity.Request" />
+		<mapping class="com.swing.foodserving.entity.RequestCancel" />
+		<mapping class="com.swing.foodserving.entity.RequestDecline" />
+		<mapping class="com.swing.foodserving.entity.RequestReviewAndRating" />
+		<mapping class="com.swing.foodserving.entity.RequestComplain" />
+		<mapping class="com.swing.foodserving.entity.Query" />
+		
+		
+	</session-factory>
+	
+</hibernate-configuration>

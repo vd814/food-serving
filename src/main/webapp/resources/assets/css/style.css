@@ -1,0 +1,12 @@
+@charset "ISO-8859-1";
+.custombox-content>* {
+    max-height: none !important;
+}
+
+.cursorPointer{
+	cursor: pointer;
+}
+
+.error{
+	color: red;
+}
